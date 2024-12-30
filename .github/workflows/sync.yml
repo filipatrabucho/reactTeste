@@ -1,32 +1,39 @@
-name: Sync Repository
+name: Auto Sync Fork
 
-# Gatilhos: sincroniza quando há push no repositório original ou manualmente
 on:
   push:
     branches:
-      - main # Substitua 'main' pelo nome da branch principal do repositório original, se for diferente
-  workflow_dispatch: # Permite executar manualmente, se necessário
+      - main
+  workflow_dispatch: # Permite execução manual
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      # Verificar o código do fork
+      # Checkout o repositório fork
       - name: Checkout Fork
         uses: actions/checkout@v3
 
       # Adicionar o repositório original como upstream
-      - name: Add Upstream Repository
+      - name: Add Upstream
         run: |
           git remote add upstream https://github.com/Ana-Teste/reactTeste.git
           git fetch upstream
 
-      # Mesclar alterações do repositório original, ignorando a pasta 'public'
-      - name: Merge Changes and Ignore 'public'
+      # Mesclar mudanças do repositório original no fork
+      - name: Merge Changes Ignoring 'public' and '.env'
         run: |
+          # Atualizar com as alterações do upstream
           git pull upstream main --no-commit --no-ff
-          rm -rf public # Remove a pasta public antes de confirmar
+          
+          # Remover a pasta public e o arquivo .env
+          rm -rf public
+          rm -f .env
+
+          # Confirmar as alterações sem incluir os arquivos removidos
           git add .
-          git commit -m "Sync with upstream, ignoring public"
+          git commit -m "Sync with upstream, ignoring public and .env"
+          
+          # Empurrar as alterações para o fork
           git push origin main
