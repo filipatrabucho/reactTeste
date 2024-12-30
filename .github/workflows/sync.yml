@@ -36,4 +36,3 @@ jobs:
           git commit -m "Sync with upstream, ignoring public and .env"
           
           # Empurrar as alterações para o fork
-          git push origin main
