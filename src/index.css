@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "Roboto", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h1, h2, h3 {
+  font-family: "Merriweather Sans", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
