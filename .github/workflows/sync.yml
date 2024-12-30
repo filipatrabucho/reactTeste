@@ -1,10 +1,11 @@
 name: Sync Repository
 
-# Aciona a sincronização manualmente ou diariamente
+# Gatilhos: sincroniza quando há push no repositório original ou manualmente
 on:
-  schedule:
-    - cron: '0 0 * * *' # Executa diariamente à meia-noite UTC
-  workflow_dispatch: # Permite executar manualmente
+  push:
+    branches:
+      - main # Substitua 'main' pelo nome da branch principal do repositório original, se for diferente
+  workflow_dispatch: # Permite executar manualmente, se necessário
 
 jobs:
   sync:
