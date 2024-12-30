@@ -7,7 +7,14 @@ function Teste() {
           Teste a funcionar o fork.
       </div>
       <div>
-      Teste a funcionar o fork222.
+        Teste a funcionar o fork.
+      </div>
+
+      <div>
+        Teste a funcionar o fork v3.
+      </div>
+      <div>
+        Teste a funcionar o fork - v3.
       </div>
     </>
   )
