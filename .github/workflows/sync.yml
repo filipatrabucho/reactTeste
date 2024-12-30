@@ -1,0 +1,31 @@
+name: Sync Repository
+
+# Aciona a sincronização manualmente ou diariamente
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executa diariamente à meia-noite UTC
+  workflow_dispatch: # Permite executar manualmente
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Verificar o código do fork
+      - name: Checkout Fork
+        uses: actions/checkout@v3
+
+      # Adicionar o repositório original como upstream
+      - name: Add Upstream Repository
+        run: |
+          git remote add upstream https://github.com/Ana-Teste/reactTeste.git
+          git fetch upstream
+
+      # Mesclar alterações do repositório original, ignorando a pasta 'public'
+      - name: Merge Changes and Ignore 'public'
+        run: |
+          git pull upstream main --no-commit --no-ff
+          rm -rf public # Remove a pasta public antes de confirmar
+          git add .
+          git commit -m "Sync with upstream, ignoring public"
+          git push origin main
