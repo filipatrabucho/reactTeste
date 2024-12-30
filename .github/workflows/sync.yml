@@ -21,9 +21,18 @@ jobs:
           git remote add upstream https://github.com/Ana-Teste/reactTeste.git
           git fetch upstream
 
-      # Mesclar as alterações do repositório original no fork
-      - name: Merge Changes
+      # Mesclar mudanças do repositório original no fork
+      - name: Merge Changes Ignoring 'public' and '.env'
         run: |
-          git checkout main
+          # Atualizar com as alterações do upstream
           git pull upstream main --no-commit --no-ff
-          git push origin main
+          
+          # Remover a pasta public e o arquivo .env
+          rm -rf public
+          rm -f .env
+
+          # Confirmar as alterações sem incluir os arquivos removidos
+          git add .
+          git commit -m "Sync with upstream, ignoring public and .env"
+          
+          # Empurrar as alterações para o fork
